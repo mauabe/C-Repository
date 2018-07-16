@@ -10,7 +10,8 @@
 #include <stdio.h>
 //#include <stdafx>             //error on xcode, used stdio.h instead
 #include <string.h>				// For string functions
-#include <stlib.h>			// not available,  compiler error ???
+//#include <stlib.h>			// not available,  compiler error ???
+
 
 
 const char * sampleData[] = {
@@ -103,9 +104,9 @@ int main(void)
 
 // =================================================================
 
-int GetRecords (StudentRecType studentRecords [], char * sampleData[], int maxNoOfRecords);
-
+int GetRecords (StudentRecType studentRecords [], char * sampleData[], int maxNoOfRecords)
 {
+
 	int recNum;
 	char buffer[100];				// Work array
 	char fname[20];					// First name
@@ -120,11 +121,11 @@ int GetRecords (StudentRecType studentRecords [], char * sampleData[], int maxNo
 
 	do
 	{
-		strcpy_s (buffer, sampleData [recNum]);	// Copy a line of data into buffer
+		strcpy (buffer, sampleData [recNum]);	// Copy a line of data into buffer
 			if ((buffer[0] | 32) == 'z' && (buffer[1] | 32) == 'z')		//Exit when find two capital "ZZ"
 			break;
 
-		printf ("%s\n testing", buffer);			// temp test, remove after working
+		//printf ("%s\n testing", buffer);			// temp test, remove after working
 		
 		index1 = index2 = 0;				//starting point
 
@@ -141,11 +142,11 @@ int GetRecords (StudentRecType studentRecords [], char * sampleData[], int maxNo
 			lname [index2] = '\0';			//make null terminated
 
 		// Copy last name, coma, space, first name to full name
-			strcpy_s (studentRecords[recNum].fullName, lname);
-			strcat_s (studentRecords[recNum].fullName, ",  ");
-			strcat_s (studentRecords[recNum].fullName, fname);
+			strcpy (studentRecords[recNum].fullName, lname);
+			strcat (studentRecords[recNum].fullName, ",  ");
+			strcat (studentRecords[recNum].fullName, fname);
 
-        printf ("TEST:     " "%s  %s   %s   \n", studentRecords[recNum].fullName, studentRecords[recNum].lname, studentRecords[recNum].fname)        //???????
+        //printf ("TEST:     " "%s  %s   %s   \n", studentRecords[recNum].fullName, lname, fname);        //???????
 		// temp test, remove after working
 
 		for (scoreIndex = 0; scoreIndex < 4; scoreIndex++)		//lop to get 4 scores
@@ -160,6 +161,9 @@ int GetRecords (StudentRecType studentRecords [], char * sampleData[], int maxNo
 			temp[index2] = '\0';							// make null terminated
 
 			score = atoi (temp);							// Convert ASCII string to number
+															// Complier error "atoi" in invalid in C99
+
+
 
 			studentRecords [recNum].scores[scoreIndex] = score;		//enter score into record
 		}
@@ -196,8 +200,9 @@ void AssignGrades(StudentRecType studentRecords[], int numOfRecords)
 			studentRecords[recNum].grade = 'D';
 		else  
 			studentRecords[recNum].grade = 'F';
-		//printf("%5d", studentRecords[recNum].grade)
+		//printf ("%5d \n\n", studentRecords[recNum].grade);  //TEST
 	}
+
 }
 // =========================
 void PrintRecords(StudentRecType studentRecords[], int numOfRecords)
@@ -208,15 +213,15 @@ void PrintRecords(StudentRecType studentRecords[], int numOfRecords)
 	int grade;
     
 	// Print Headers
-    prinf ("  Last Name, First Name     "),
-    printf ("       Scores        ");
-    printf (" Total    ");
+    printf ("Last Name, First Name      "),
+    printf ("   Scores              ");
+    printf ("Total  ");
     printf ("Grades \n");
 
-    printf ("----------------------------");
-    printf ("------------------   ");
-    printf ("-----");
-    printf ("------\n");
+    printf ("----------------------      ");
+    printf ("-------------------  ");
+    printf ("------  ");
+    printf ("------ \n");
 
            
 	for (recNum =0; recNum < numOfRecords; recNum++)
@@ -224,11 +229,12 @@ void PrintRecords(StudentRecType studentRecords[], int numOfRecords)
         printf("%-25s", studentRecords[recNum].fullName);
         
         for (scoreIndex = 0; scoreIndex < 4; scoreIndex++)
-		printf("%20d", studentRecords[recNum].scores[scoreIndex]);    //printf scores
+		printf("%5d", studentRecords[recNum].scores[scoreIndex]);    //printf scores
 	
-        printf("%5d", studentRecords[recNum].total );                //printf Total
+        printf("%10d", studentRecords[recNum].total );                //printf Total
         
-        printf("  %5s  \n", studentRecords[recNum].grade );                  //printf grades
+        printf(" %5d", studentRecords[recNum].grade );                  //printf grades
+        printf ("\n");
     }
     
 	//printf("END OF LOOPING AROUND\n\n\n");
