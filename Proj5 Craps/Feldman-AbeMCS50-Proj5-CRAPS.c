@@ -4,7 +4,7 @@
 //This program simulate a dice craps game
 //July 18, 2018
 //July 22, 2018
-//Apple Xcode
+//Apple Sublime Text
 //Compiler clang / g++
 
 //Include statements
@@ -14,55 +14,87 @@
 #include <stdlib.h>  // To srand (random seader) function
 
 //Constants
-#define TOP 1
-#define BOTTOM 2
-#define LOWER_LIMIT 1
-#define UPPER_LIMIT 6
-#define ARRAY_MAX_SIZE 2
+#define TOP         1
+#define BOTTOM      2
+#define WIN         10
+#define LOST        11
+#define CONTINUE    12
 
 // Function prototypes (No need to name paramenters in function prototypes)
 void PrintStudentInfo (int );
 
-int GetRecords ([], char *[], int);
-
-
-void CreateRandomNumbers (int [], int, int, int);
-//void PrintRandomNumbers (int [], int);
-void GenerateDices (int , int , int );
-
-
 //No Global variables
-
-
-
-
 
 // ========================================
 int main(void)
 {
-    int dice1;
-    int dice2;
-    int sum;
-    
-    
-    //int sampleData [ARRAY_MAX_SIZE];
-    int sampleSize = 2;               // This number must be same or less than ARRAY_MAX_SIZE
     srand(time(NULL));                 // This function must be used just once for entire program
+    int LL  = 1;
+    int UL = 6;
+    int dice1 = rand() % (UL - LL + 1) + LL;
+    int dice2 = rand() % (UL - LL + 1) + LL;
+    int sum =  dice1 + dice2;
+    int sum2 =  dice1 + dice2;
+
+    int mypoint;
+    int gameStatus;
     
+
     // Call functions: must provide real variables/constant names
     PrintStudentInfo (TOP);
-    CreateRandomNumbers (sampleData, sampleSize, LOWER_LIMIT, UPPER_LIMIT);
-//    PrintRandomNumbers (sampleData, sampleSize);
-    
-    GenerateDices (int dice1, int dice2, int sum)
 
+    switch(sum)
+    {
+        case 2:
+        case 3:
+        case 12:
+            printf("Your dices rolled: %d and %d = %d\n\n", dice1, dice2, sum);
+            printf("Craps! Sorry, you lost!\n\n\n\n");
+            gameStatus = LOST;
+            break;
+        case 7:
+        case 11:
+            printf("Your dices rolled: %d and %d = %d\n\n", dice1, dice2, sum);
+            printf("Congrats! You won!\n\n\n\n");
+            gameStatus = WIN;
+            break;         
+        case 4:
+        case 5:
+        case 6:
+        case 8:
+        case 9:
+        case 10:
+            printf("Your dices rolled: %d and %d = %d\n\n", dice1, dice2, sum);
+            printf("Point is now %d! The game continues:\n\n", sum);
+            mypoint = sum;
+            gameStatus = CONTINUE;
+    }
     
-    
-    
-    
-    
+    while (gameStatus == CONTINUE)
+    {
+        int dice1 = rand() % (UL - LL + 1) + LL;
+        int dice2 = rand() % (UL - LL + 1) + LL;
+        int sum2 = dice1 + dice2;
+
+        printf("Your dices rolled: %d and %d = %d \n", dice1, dice2, sum2);
+
+        if (sum2 == 7)
+        {
+            printf("Oh, craps! %d, you lost!\n\n\n", sum2);
+            gameStatus = LOST;
+        }
+
+        else if (sum2 == mypoint)
+        {
+            printf("Congrats! You won!\n\n\n");
+            gameStatus = WIN;
+        }
+    }
+
     PrintStudentInfo (BOTTOM);
-    
+   
+
+
     return 0;
 }
 //=============================
@@ -73,94 +105,5 @@ void PrintStudentInfo (int topOrBottom)
     else if(topOrBottom == BOTTOM)
         printf("Mauricio Feldman-Abe - End of Project 5 \n\n");
 }
-// ========================
-void GenerateDices (int dice1, int dice2, int sum)
-{
-    dice1 = RandNum(1,6);
-    dice2 = RandNum(1,6);
-    sum =  dice1 + dice2;
-    printf ("%d  %d  %d", dice1, dice2, sum )
-}
 
 
-// ============================
-void
-    
-int firstHand []
-
-    
-    
-    int crap = (2 || 3 || 12);
-    int win = (7 || 11);
-    
-
-    do
-    {
-    switch(sum)
-    {
-        case 2:
-            printf("Your dices rolled: %d and %d = %d", dice1, dice2, sum);
-            printf("Sorry, you lost!");
-            break
-        case 3:
-            printf("Your dices rolled: %d and %d = %d", dice1, dice2, sum);
-            printf("Sorry, you lost!");
-            break;
-        case 12:
-            printf("Your dices rolled: %d and %d = %d", dice1, dice2, sum);
-            printf("Sorry, you lost!");
-            break;
-            
-        default 7:
-            printf("Your dices rolled: %d and %d = %d", dice1, dice2, sum);
-            printf("Congrats! You won!");
-            break;
-
-        default 11:
-            printf("Your dices rolled: %d and %d = %d", dice1, dice2, sum);
-            printf("Congrats! You won!");
-            break;
-
-            
-            
-        default 4:
-            printf("Your dices rolled: %d and %d = %d", dice1, dice2, sum);
-            printf("Point is now %d!", sum);
-        default 5:
-            printf("Your dices rolled: %d and %d = %d", dice1, dice2, sum);
-            printf("Point is now %d!", sum);
-        default 6:
-            printf("Your dices rolled: %d and %d = %d", dice1, dice2, sum);
-            printf("Point is now %d!", sum);
-        default 8:
-            printf("Your dices rolled: %d and %d = %d", dice1, dice2, sum);
-            printf("Point is now %d!", sum);
-        default 9:
-            printf("Your dices rolled: %d and %d = %d", dice1, dice2, sum);
-            printf("Point is now %d!", sum);
-        default 10:
-            printf("Your dices rolled: %d and %d = %d", dice1, dice2, sum);
-            printf("Point is now %d!", sum);
-    }
-    }
-    while
-        
-            
-}
-
-
-// ===========
-void CreateRandomNumbers (int sampleData[], int sampleSize, int LL, int UL)
-{
-    int i;
-    for (i = 0; i < 2; i++)
-        sampleData[i] = (rand() % (UL - LL + 1)) + LL;
-}
-// ==========
-void PrintRandomNumbers (int sampleData[], int sampleSize)
-{
-    int i;
-    for (i = 0; i < sampleSize; i++)
-        printf ("%5d", sampleData[i]);
-    printf("\n");
-}
